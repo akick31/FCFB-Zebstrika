@@ -36,7 +36,7 @@ public class GamePlaysController {
      * @return
      */
     @PostMapping("/game_plays/defense_submitted/{gameId}/{defensiveNumber}")
-    public ResponseEntity<GamePlaysEntity> defensiveNumberSubmitted(@PathVariable("gameId") int gameId,
+    public ResponseEntity<String> defensiveNumberSubmitted(@PathVariable("gameId") int gameId,
                                                                @PathVariable("defensiveNumber") int defensiveNumber) {
         try {
             Optional<OngoingGamesEntity> gameData = ongoingGamesRepository.findById(gameId);
@@ -54,7 +54,7 @@ public class GamePlaysController {
 
                 String encryptedDefensiveNumber = encryptionUtils.encrypt(String.valueOf(defensiveNumber));
 
-                GamePlaysEntity gamePlays = gamePlaysRepository.save(new GamePlaysEntity(
+                GamePlaysEntity gamePlay = gamePlaysRepository.save(new GamePlaysEntity(
                         gameId,
                         gameData.get().getNumPlays() + 1,
                         gameData.get().getHomeScore(),
@@ -80,7 +80,7 @@ public class GamePlaysController {
                         gameData.get().getAwayTeam(),
                         0));
 
-                return new ResponseEntity<>(gamePlays, HttpStatus.CREATED);
+                return new ResponseEntity<>(gamePlayg.toString(), HttpStatus.CREATED);
             }
             else {
                 return new ResponseEntity<>(null,
@@ -93,7 +93,7 @@ public class GamePlaysController {
     }
 
     @PutMapping("/game_plays/offense_submitted/{playId}/{offensiveNumber}/{play}")
-    public ResponseEntity<GamePlaysEntity> offensiveNumberSubmitted(@PathVariable("playId") int playId,
+    public ResponseEntity<String> offensiveNumberSubmitted(@PathVariable("playId") int playId,
                                                                     @PathVariable("offensiveNumber") int offensiveNumber,
                                                                     @PathVariable("play") String play) {
         try {
@@ -131,7 +131,7 @@ public class GamePlaysController {
 
                 //TODO UPDATE ONGOING GAME WITH THIS INFO
 
-                return new ResponseEntity<>(gamePlay, HttpStatus.OK);
+                return new ResponseEntity<>(gamePlay.toString(), HttpStatus.OK);
             }
             else {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
