@@ -27,8 +27,20 @@ public class OngoingGamesController {
     @Autowired
     TeamsRepository teamsRepository;
 
+    /**
+     * Start a game
+     * @param season
+     * @param subdivision
+     * @param homeTeam
+     * @param awayTeam
+     * @param tvChannel
+     * @param startTime
+     * @param location
+     * @return
+     */
+
     @PostMapping("/games/start/{season}/{subdivision}/{homeTeam}/{awayTeam}/{tvChannel}/{startTime}/{location}")
-    public ResponseEntity<String> startGame(@PathVariable("season") String season,
+    public ResponseEntity<OngoingGamesEntity> startGame(@PathVariable("season") String season,
                                             @PathVariable("subdivision") String subdivision,
                                             @PathVariable("homeTeam") String homeTeam,
                                             @PathVariable("awayTeam") String awayTeam,
@@ -79,6 +91,7 @@ public class OngoingGamesController {
                         "none_scoreplot.png",
                         0));
 
+                // Create image names
                 String gameId = String.valueOf(newGame.getGameId());
                 String scorebugName = gameId + "_scorebug.png";
                 String winprobName = gameId + "_winprob.png";
@@ -92,15 +105,13 @@ public class OngoingGamesController {
                 // Save the updated entity
                 ongoingGamesRepository.save(newGame);
 
-                return new ResponseEntity<>("Game started between " + homeTeam + " and " + awayTeam,
-                        HttpStatus.CREATED);
+                return new ResponseEntity<>(newGame, HttpStatus.CREATED);
             }
             else {
-                return new ResponseEntity<>("Could not find one or both teams (" + homeTeam + " or " + awayTeam
-                        + ") to create the game", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }

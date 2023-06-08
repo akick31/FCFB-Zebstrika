@@ -42,10 +42,10 @@ public class GamePlaysEntity {
     private Integer yardsToGo;
     @Basic
     @Column(name = "defensive_number")
-    private Integer defensiveNumber;
+    private String defensiveNumber;
     @Basic
     @Column(name = "offensive_number")
-    private Integer offensiveNumber;
+    private String offensiveNumber;
     @Basic
     @Column(name = "defensive_submitter")
     private String defensiveSubmitter;
@@ -85,7 +85,7 @@ public class GamePlaysEntity {
 
     public GamePlaysEntity(Integer gameId, Integer playNumber, Integer homeScore, Integer awayScore, Integer quarter,
                            String clock, Integer ballLocation, String possession, Integer down, Integer yardsToGo,
-                           int defensiveNumber, int offensiveNumber, String offensiveSubmitter,
+                           String defensiveNumber, String offensiveNumber, String offensiveSubmitter,
                            String defensiveSubmitter, String play, String result, String actualResult, int yards,
                            int playTime, int runoffTime, Double winProbability, String homeTeam, String awayTeam,
                            int difference) {
@@ -199,19 +199,19 @@ public class GamePlaysEntity {
         this.yardsToGo = yardsToGo;
     }
 
-    public Integer getDefensiveNumber() {
+    public String getDefensiveNumber() {
         return defensiveNumber;
     }
 
-    public void setDefensiveNumber(Integer defensiveNumber) {
+    public void setDefensiveNumber(String defensiveNumber) {
         this.defensiveNumber = defensiveNumber;
     }
 
-    public Integer getOffensiveNumber() {
+    public String getOffensiveNumber() {
         return offensiveNumber;
     }
 
-    public void setOffensiveNumber(Integer offensiveNumber) {
+    public void setOffensiveNumber(String offensiveNumber) {
         this.offensiveNumber = offensiveNumber;
     }
 

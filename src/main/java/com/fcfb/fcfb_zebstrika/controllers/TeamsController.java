@@ -17,6 +17,11 @@ public class TeamsController {
     @Autowired
     TeamsRepository teamsRepository;
 
+    /**
+     * Get a team by id
+     * @param id
+     * @return
+     */
     @GetMapping("/team/{id}")
     public ResponseEntity<TeamsEntity> getTeamById(@PathVariable("id") int id) {
         Optional<TeamsEntity> teamData = teamsRepository.findById(id);
@@ -28,6 +33,10 @@ public class TeamsController {
         }
     }
 
+    /**
+     * Get all teams
+     * @return
+     */
     @GetMapping("/teams")
     public ResponseEntity<TeamsEntity> getAllTeams() {
         Optional<TeamsEntity> teamData = teamsRepository.findAllTeams();
@@ -39,6 +48,11 @@ public class TeamsController {
         }
     }
 
+    /**
+     * Get a team by name
+     * @param name
+     * @return
+     */
     @GetMapping("/team/name/{name}")
     public ResponseEntity<TeamsEntity> getTeamByName(@PathVariable("name") String name) {
         Optional<TeamsEntity> teamData = teamsRepository.findByName(name);
@@ -50,10 +64,15 @@ public class TeamsController {
         }
     }
 
+    /**
+     * Create a new team
+     * @param team
+     * @return
+     */
     @PostMapping("/team")
-    public ResponseEntity<String> createTeam(@RequestBody TeamsEntity team) {
+    public ResponseEntity<TeamsEntity> createTeam(@RequestBody TeamsEntity team) {
         try {
-            teamsRepository.save(new TeamsEntity(
+            TeamsEntity newTeam = teamsRepository.save(new TeamsEntity(
                     team.getLogo(),
                     team.getCoach(),
                     0,
@@ -74,14 +93,20 @@ public class TeamsController {
                     0,
                     0
             ));
-            return new ResponseEntity<>("Successfully created " + team.getName(), HttpStatus.CREATED);
+            return new ResponseEntity<>(newTeam, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
+    /**
+     * Update a team
+     * @param name
+     * @param team
+     * @return
+     */
     @PutMapping("/team/{name}")
-    public ResponseEntity<String> updateTeam(@PathVariable("name") String name, @RequestBody TeamsEntity team) {
+    public ResponseEntity<TeamsEntity> updateTeam(@PathVariable("name") String name, @RequestBody TeamsEntity team) {
         Optional<TeamsEntity> teamData = teamsRepository.findByName(name);
 
         if (teamData.isPresent()) {
@@ -105,12 +130,17 @@ public class TeamsController {
             _team.setOverallConferenceWins(team.getOverallConferenceWins());
             _team.setOverallConferenceLosses(team.getOverallConferenceLosses());
             teamsRepository.save(_team);
-            return new ResponseEntity<>("Updated " + team.getName(), HttpStatus.OK);
+            return new ResponseEntity<>(_team, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Could not find a team to update", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/team/{id}")
     public ResponseEntity<HttpStatus> deleteTeam(@PathVariable("id") int id) {
         try {
