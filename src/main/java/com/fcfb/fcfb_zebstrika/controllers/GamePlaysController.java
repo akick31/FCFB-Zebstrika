@@ -80,7 +80,7 @@ public class GamePlaysController {
                         gameData.get().getAwayTeam(),
                         0));
 
-                return new ResponseEntity<>(gamePlayg.toString(), HttpStatus.CREATED);
+                return new ResponseEntity<>(gamePlay.toString(), HttpStatus.CREATED);
             }
             else {
                 return new ResponseEntity<>(null,
