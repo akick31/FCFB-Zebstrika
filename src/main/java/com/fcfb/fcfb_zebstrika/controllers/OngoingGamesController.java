@@ -44,7 +44,7 @@ public class OngoingGamesController {
 
                 //TODO update plot names
 
-                ongoingGamesRepository.save(new OngoingGamesEntity(
+                OngoingGamesEntity newGame = ongoingGamesRepository.save(new OngoingGamesEntity(
                         homeTeam,
                         awayTeam,
                         homeTeamData.get().getCoach(),
@@ -78,6 +78,19 @@ public class OngoingGamesController {
                         "none_winprob.png",
                         "none_scoreplot.png",
                         0));
+
+                String gameId = String.valueOf(newGame.getGameId());
+                String scorebugName = gameId + "_scorebug.png";
+                String winprobName = gameId + "_winprob.png";
+                String scoreplotName = gameId + "_scoreplot.png";
+
+                // Update the entity with the new image names
+                newGame.setScorebug(scorebugName);
+                newGame.setWinProbabilityPlot(winprobName);
+                newGame.setScorePlot(scoreplotName);
+
+                // Save the updated entity
+                ongoingGamesRepository.save(newGame);
 
                 return new ResponseEntity<>("Game started between " + homeTeam + " and " + awayTeam,
                         HttpStatus.CREATED);
