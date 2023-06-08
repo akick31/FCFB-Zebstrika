@@ -331,4 +331,36 @@ public class GamePlaysEntity {
     public int hashCode() {
         return Objects.hash(gameId, playNumber, homeScore, awayScore, gameQuarter, clock, ballLocation, possession, down, yardsToGo, defensiveNumber, offensiveNumber, defensiveSubmitter, offensiveSubmitter, play, result, difference, actualResult, yards, playTime, runoffTime, winProbability, homeTeam, awayTeam, playId);
     }
+
+    @Override
+    public String toString() {
+        return "{\n" +
+                "  \"playId\": " + playId + ",\n" +
+                "  \"gameId\": " + gameId + ",\n" +
+                "  \"playNumber\": " + playNumber + ",\n" +
+                "  \"homeScore\": " + homeScore + ",\n" +
+                "  \"awayScore\": " + awayScore + ",\n" +
+                "  \"quarter\": " + gameQuarter + ",\n" +
+                "  \"clock\": \"" + clock + "\",\n" +
+                "  \"ballLocation\": " + ballLocation + ",\n" +
+                "  \"possession\": \"" + possession + "\",\n" +
+                "  \"down\": " + down + ",\n" +
+                "  \"yardsToGo\": " + yardsToGo + ",\n" +
+                "  \"defensiveNumber\": " + defensiveNumber + ",\n" +
+                "  \"offensiveNumber\": " + offensiveNumber + ",\n" +
+                "  \"offensiveSubmitter\": \"" + offensiveSubmitter + "\",\n" +
+                "  \"defensiveSubmitter\": \"" + defensiveSubmitter + "\",\n" +
+                "  \"play\": \"" + play + "\",\n" +
+                "  \"result\": \"" + result + "\",\n" +
+                "  \"actualResult\": \"" + actualResult + "\",\n" +
+                "  \"yards\": " + yards + ",\n" +
+                "  \"playTime\": " + playTime + ",\n" +
+                "  \"runoffTime\": " + runoffTime + ",\n" +
+                "  \"winProbability\": " + winProbability + ",\n" +
+                "  \"homeTeam\": \"" + homeTeam + "\",\n" +
+                "  \"awayTeam\": \"" + awayTeam + "\",\n" +
+                "  \"difference\": " + difference + "\n" +
+                "}";
+    }
+
 }

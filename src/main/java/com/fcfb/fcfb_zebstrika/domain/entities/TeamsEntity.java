@@ -271,4 +271,30 @@ public class TeamsEntity {
     public int hashCode() {
         return Objects.hash(id, logo, coach, coachesPollRanking, name, playoffCommitteeRanking, primaryColor, secondaryColor, subdivision, offensivePlaybook, defensivePlaybook, conference, currentWins, currentLosses, overallWins, overallLosses, currentConferenceWins, currentConferenceLosses, overallConferenceWins, overallConferenceLosses);
     }
+
+    @Override
+    public String toString() {
+        return "{\n" +
+                "  \"id\": \"" + id + "\",\n" +
+                "  \"logo\": \"" + logo + "\",\n" +
+                "  \"coach\": \"" + coach + "\",\n" +
+                "  \"coachesPollRanking\": " + coachesPollRanking + ",\n" +
+                "  \"name\": \"" + name + "\",\n" +
+                "  \"playoffCommitteeRanking\": " + playoffCommitteeRanking + ",\n" +
+                "  \"primaryColor\": \"" + primaryColor + "\",\n" +
+                "  \"secondaryColor\": \"" + secondaryColor + "\",\n" +
+                "  \"subdivision\": \"" + subdivision + "\",\n" +
+                "  \"offensivePlaybook\": \"" + offensivePlaybook + "\",\n" +
+                "  \"defensivePlaybook\": \"" + defensivePlaybook + "\",\n" +
+                "  \"conference\": \"" + conference + "\",\n" +
+                "  \"currentWins\": " + currentWins + ",\n" +
+                "  \"currentLosses\": " + currentLosses + ",\n" +
+                "  \"overallWins\": " + overallWins + ",\n" +
+                "  \"overallLosses\": " + overallLosses + ",\n" +
+                "  \"currentConferenceWins\": " + currentConferenceWins + ",\n" +
+                "  \"currentConferenceLosses\": " + currentConferenceLosses + ",\n" +
+                "  \"overallConferenceWins\": " + overallConferenceWins + ",\n" +
+                "  \"overallConferenceLosses\": " + overallConferenceLosses + "\n" +
+                "}";
+    }
 }

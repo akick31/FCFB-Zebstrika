@@ -442,4 +442,44 @@ public class OngoingGamesEntity {
     public int hashCode() {
         return Objects.hash(gameId, homeTeam, awayTeam, homeCoach, awayCoach, homeOffensivePlaybook, awayOffensivePlaybook, homeDefensivePlaybook, awayDefensivePlaybook, homeScore, awayScore, possession, quarter, clock, ballLocation, down, yardsToGo, tvChannel, startTime, location, homeWins, homeLosses, awayWins, awayLosses, scorebug, subdivision, timestamp, winProbability, isFinal, season, waitingOn, winProbabilityPlot, scorePlot, numPlays);
     }
+
+    @Override
+    public String toString() {
+        return "{\n" +
+                "  \"gameId\": \"" + gameId + "\",\n" +
+                "  \"homeTeam\": \"" + homeTeam + "\",\n" +
+                "  \"awayTeam\": \"" + awayTeam + "\",\n" +
+                "  \"homeCoach\": \"" + homeCoach + "\",\n" +
+                "  \"awayCoach\": \"" + awayCoach + "\",\n" +
+                "  \"homeOffensivePlaybook\": \"" + homeOffensivePlaybook + "\",\n" +
+                "  \"awayOffensivePlaybook\": \"" + awayOffensivePlaybook + "\",\n" +
+                "  \"homeDefensivePlaybook\": \"" + homeDefensivePlaybook + "\",\n" +
+                "  \"awayDefensivePlaybook\": \"" + awayDefensivePlaybook + "\",\n" +
+                "  \"homeScore\": " + homeScore + ",\n" +
+                "  \"awayScore\": " + awayScore + ",\n" +
+                "  \"possession\": \"" + possession + "\",\n" +
+                "  \"quarter\": " + quarter + ",\n" +
+                "  \"clock\": \"" + clock + "\",\n" +
+                "  \"ballLocation\": " + ballLocation + ",\n" +
+                "  \"down\": " + down + ",\n" +
+                "  \"yardsToGo\": " + yardsToGo + ",\n" +
+                "  \"tvChannel\": \"" + tvChannel + "\",\n" +
+                "  \"startTime\": \"" + startTime + "\",\n" +
+                "  \"location\": \"" + location + "\",\n" +
+                "  \"homeWins\": " + homeWins + ",\n" +
+                "  \"homeLosses\": " + homeLosses + ",\n" +
+                "  \"awayWins\": " + awayWins + ",\n" +
+                "  \"awayLosses\": " + awayLosses + ",\n" +
+                "  \"scorebug\": \"" + scorebug + "\",\n" +
+                "  \"subdivision\": \"" + subdivision + "\",\n" +
+                "  \"timestamp\": \"" + timestamp + "\",\n" +
+                "  \"winProbability\": " + winProbability + ",\n" +
+                "  \"isFinal\": " + isFinal + ",\n" +
+                "  \"season\": " + season + ",\n" +
+                "  \"waitingOn\": \"" + waitingOn + "\",\n" +
+                "  \"winProbabilityPlot\": \"" + winProbabilityPlot + "\",\n" +
+                "  \"scorePlot\": \"" + scorePlot + "\",\n" +
+                "  \"numPlays\": " + numPlays + "\n" +
+                "}";
+    }
 }
