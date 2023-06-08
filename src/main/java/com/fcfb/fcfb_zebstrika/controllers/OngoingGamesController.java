@@ -91,6 +91,20 @@ public class OngoingGamesController {
                         "none_scoreplot.png",
                         0));
 
+                // Create image names
+                String gameId = String.valueOf(newGame.getGameId());
+                String scorebugName = gameId + "_scorebug.png";
+                String winprobName = gameId + "_winprob.png";
+                String scoreplotName = gameId + "_scoreplot.png";
+
+                // Update the entity with the new image names
+                newGame.setScorebug(scorebugName);
+                newGame.setWinProbabilityPlot(winprobName);
+                newGame.setScorePlot(scoreplotName);
+
+                // Save the updated entity
+                ongoingGamesRepository.save(newGame);
+
                 return new ResponseEntity<>(newGame, HttpStatus.CREATED);
             }
             else {
