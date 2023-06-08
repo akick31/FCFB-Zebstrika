@@ -23,13 +23,13 @@ public class TeamsController {
      * @return
      */
     @GetMapping("/team/{id}")
-    public ResponseEntity<TeamsEntity> getTeamById(@PathVariable("id") int id) {
+    public ResponseEntity<String> getTeamById(@PathVariable("id") int id) {
         Optional<TeamsEntity> teamData = teamsRepository.findById(id);
 
         if (teamData.isPresent()) {
-            return new ResponseEntity<>(teamData.get(), HttpStatus.OK);
+            return new ResponseEntity<>(teamData.get().toString(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -38,13 +38,13 @@ public class TeamsController {
      * @return
      */
     @GetMapping("/teams")
-    public ResponseEntity<TeamsEntity> getAllTeams() {
+    public ResponseEntity<String> getAllTeams() {
         Optional<TeamsEntity> teamData = teamsRepository.findAllTeams();
 
         if (teamData.isPresent()) {
-            return new ResponseEntity<>(teamData.get(), HttpStatus.OK);
+            return new ResponseEntity<>(teamData.get().toString(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -54,13 +54,13 @@ public class TeamsController {
      * @return
      */
     @GetMapping("/team/name/{name}")
-    public ResponseEntity<TeamsEntity> getTeamByName(@PathVariable("name") String name) {
+    public ResponseEntity<String> getTeamByName(@PathVariable("name") String name) {
         Optional<TeamsEntity> teamData = teamsRepository.findByName(name);
 
         if (teamData.isPresent()) {
-            return new ResponseEntity<>(teamData.get(), HttpStatus.OK);
+            return new ResponseEntity<>(teamData.get().toString(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -70,7 +70,7 @@ public class TeamsController {
      * @return
      */
     @PostMapping("/team")
-    public ResponseEntity<TeamsEntity> createTeam(@RequestBody TeamsEntity team) {
+    public ResponseEntity<String> createTeam(@RequestBody TeamsEntity team) {
         try {
             TeamsEntity newTeam = teamsRepository.save(new TeamsEntity(
                     team.getLogo(),
@@ -93,7 +93,7 @@ public class TeamsController {
                     0,
                     0
             ));
-            return new ResponseEntity<>(newTeam, HttpStatus.CREATED);
+            return new ResponseEntity<>(newTeam.toString(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
@@ -106,7 +106,7 @@ public class TeamsController {
      * @return
      */
     @PutMapping("/team/{name}")
-    public ResponseEntity<TeamsEntity> updateTeam(@PathVariable("name") String name, @RequestBody TeamsEntity team) {
+    public ResponseEntity<String> updateTeam(@PathVariable("name") String name, @RequestBody TeamsEntity team) {
         Optional<TeamsEntity> teamData = teamsRepository.findByName(name);
 
         if (teamData.isPresent()) {
@@ -130,7 +130,7 @@ public class TeamsController {
             _team.setOverallConferenceWins(team.getOverallConferenceWins());
             _team.setOverallConferenceLosses(team.getOverallConferenceLosses());
             teamsRepository.save(_team);
-            return new ResponseEntity<>(_team, HttpStatus.OK);
+            return new ResponseEntity<>(_team.toString(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }

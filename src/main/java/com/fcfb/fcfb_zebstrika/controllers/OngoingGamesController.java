@@ -40,7 +40,7 @@ public class OngoingGamesController {
      */
 
     @PostMapping("/games/start/{season}/{subdivision}/{homeTeam}/{awayTeam}/{tvChannel}/{startTime}/{location}")
-    public ResponseEntity<OngoingGamesEntity> startGame(@PathVariable("season") String season,
+    public ResponseEntity<String> startGame(@PathVariable("season") String season,
                                             @PathVariable("subdivision") String subdivision,
                                             @PathVariable("homeTeam") String homeTeam,
                                             @PathVariable("awayTeam") String awayTeam,
@@ -105,7 +105,7 @@ public class OngoingGamesController {
                 // Save the updated entity
                 ongoingGamesRepository.save(newGame);
 
-                return new ResponseEntity<>(newGame, HttpStatus.CREATED);
+                return new ResponseEntity<>(newGame.toString(), HttpStatus.CREATED);
             }
             else {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
