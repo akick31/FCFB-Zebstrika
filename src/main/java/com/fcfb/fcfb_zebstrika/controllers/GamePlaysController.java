@@ -4,6 +4,7 @@ import com.fcfb.fcfb_zebstrika.domain.entities.GamePlaysEntity;
 import com.fcfb.fcfb_zebstrika.domain.entities.OngoingGamesEntity;
 import com.fcfb.fcfb_zebstrika.domain.repositories.GamePlaysRepository;
 import com.fcfb.fcfb_zebstrika.domain.repositories.OngoingGamesRepository;
+import com.fcfb.fcfb_zebstrika.game_logic.PlayLogic;
 import com.fcfb.fcfb_zebstrika.utils.EncryptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/zebstrika")
 public class GamePlaysController {
+    private final PlayLogic playLogic;
     private final EncryptionUtils encryptionUtils;
 
     @Autowired
@@ -25,7 +27,8 @@ public class GamePlaysController {
     @Autowired
     OngoingGamesRepository ongoingGamesRepository;
 
-    public GamePlaysController(EncryptionUtils encryptionUtils) {
+    public GamePlaysController(PlayLogic playLogic, EncryptionUtils encryptionUtils) {
+        this.playLogic = playLogic;
         this.encryptionUtils = encryptionUtils;
     }
 
@@ -99,39 +102,22 @@ public class GamePlaysController {
         try {
             Optional<GamePlaysEntity> gamePlayData = gamePlaysRepository.findById(playId);
 
+
             if (gamePlayData.isPresent()) {
                 String decryptedDefensiveNumber = encryptionUtils.decrypt(gamePlayData.get().getDefensiveNumber());
 
                 GamePlaysEntity gamePlay = gamePlayData.get();
+                Optional<OngoingGamesEntity> gameData = ongoingGamesRepository.findById(gamePlay.getGameId());
 
-                //TODO HANDLE LOGIC OF PLAY
-
-                gamePlay.setHomeScore(gamePlay.getHomeScore());
-                gamePlay.setAwayScore(gamePlay.getAwayScore());
-                gamePlay.setPossession(gamePlay.getPossession());
-                gamePlay.setGameQuarter(gamePlay.getGameQuarter());
-                gamePlay.setClock(gamePlay.getClock());
-                gamePlay.setBallLocation(gamePlay.getBallLocation());
-                gamePlay.setDown(gamePlay.getDown());
-                gamePlay.setYardsToGo(gamePlay.getYardsToGo());
-                gamePlay.setDefensiveNumber(decryptedDefensiveNumber);
-                gamePlay.setOffensiveNumber(String.valueOf(offensiveNumber));
-                gamePlay.setOffensiveSubmitter(gamePlay.getOffensiveSubmitter());
-                gamePlay.setDefensiveSubmitter(gamePlay.getDefensiveSubmitter());
-                gamePlay.setPlay(play);
-                gamePlay.setResult(gamePlay.getResult());
-                gamePlay.setActualResult(gamePlay.getActualResult());
-                gamePlay.setYards(gamePlay.getYards());
-                gamePlay.setPlayTime(gamePlay.getPlayTime());
-                gamePlay.setRunoffTime(gamePlay.getRunoffTime());
-                gamePlay.setWinProbability(gamePlay.getWinProbability());
-                gamePlay.setDifference(gamePlay.getDifference());
-
-                gamePlaysRepository.save(gamePlay);
-
-                //TODO UPDATE ONGOING GAME WITH THIS INFO
-
-                return new ResponseEntity<>(gamePlay.toString(), HttpStatus.OK);
+                if (gameData.isPresent()){
+                    OngoingGamesEntity game = gameData.get();
+                    gamePlay = playLogic.runPlay(gamePlay, game, play, String.valueOf(offensiveNumber), decryptedDefensiveNumber);
+                    gamePlaysRepository.save(gamePlay);
+                    return new ResponseEntity<>(gamePlay.toString(), HttpStatus.OK);
+                }
+                else {
+                    return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+                }
             }
             else {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
