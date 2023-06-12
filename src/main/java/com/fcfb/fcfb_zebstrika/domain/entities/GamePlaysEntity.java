@@ -27,7 +27,7 @@ public class GamePlaysEntity {
     private Integer gameQuarter;
     @Basic
     @Column(name = "clock")
-    private String clock;
+    private Integer clock;
     @Basic
     @Column(name = "ball_location")
     private Integer ballLocation;
@@ -84,7 +84,7 @@ public class GamePlaysEntity {
     private String awayTeam;
 
     public GamePlaysEntity(Integer gameId, Integer playNumber, Integer homeScore, Integer awayScore, Integer quarter,
-                           String clock, Integer ballLocation, String possession, Integer down, Integer yardsToGo,
+                           Integer clock, Integer ballLocation, String possession, Integer down, Integer yardsToGo,
                            String defensiveNumber, String offensiveNumber, String offensiveSubmitter,
                            String defensiveSubmitter, String play, String result, String actualResult, int yards,
                            int playTime, int runoffTime, Double winProbability, String homeTeam, String awayTeam,
@@ -159,11 +159,11 @@ public class GamePlaysEntity {
         this.gameQuarter = gameQuarter;
     }
 
-    public String getClock() {
+    public Integer getClock() {
         return clock;
     }
 
-    public void setClock(String clock) {
+    public void setClock(Integer clock) {
         this.clock = clock;
     }
 

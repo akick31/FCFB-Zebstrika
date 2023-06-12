@@ -53,18 +53,15 @@ public class OngoingGamesController {
             Optional<TeamsEntity> awayTeamData = teamsRepository.findByName(awayTeam);
 
             if (homeTeamData.isPresent() && awayTeamData.isPresent()) {
-
-                //TODO update plot names
-
                 OngoingGamesEntity newGame = ongoingGamesRepository.save(new OngoingGamesEntity(
                         homeTeam,
                         awayTeam,
                         homeTeamData.get().getCoach(),
                         awayTeamData.get().getCoach(),
-                        homeTeamData.get().getOffensivePlaybook(),
-                        awayTeamData.get().getOffensivePlaybook(),
-                        homeTeamData.get().getDefensivePlaybook(),
-                        awayTeamData.get().getDefensivePlaybook(),
+                        homeTeamData.get().getOffensivePlaybook().toLowerCase(),
+                        awayTeamData.get().getOffensivePlaybook().toLowerCase(),
+                        homeTeamData.get().getDefensivePlaybook().toLowerCase(),
+                        awayTeamData.get().getDefensivePlaybook().toLowerCase(),
                         0,
                         0,
                         "home",
@@ -85,11 +82,14 @@ public class OngoingGamesController {
                         LocalDateTime.now(),
                         0.0,
                         Boolean.FALSE,
+                        Boolean.FALSE,
                         Integer.parseInt(season),
                         awayTeamData.get().getCoach(),
                         "none_winprob.png",
                         "none_scoreplot.png",
-                        0));
+                        0,
+                        3,
+                        3));
 
                 // Create image names
                 String gameId = String.valueOf(newGame.getGameId());

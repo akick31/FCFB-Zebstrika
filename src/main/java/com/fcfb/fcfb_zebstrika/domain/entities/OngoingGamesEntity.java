@@ -96,6 +96,9 @@ public class OngoingGamesEntity {
     @Column(name = "is_final")
     private Boolean isFinal;
     @Basic
+    @Column(name = "is_ot")
+    private Boolean isOT;
+    @Basic
     @Column(name = "season")
     private Integer season;
     @Basic
@@ -110,6 +113,12 @@ public class OngoingGamesEntity {
     @Basic
     @Column(name = "num_plays")
     private Integer numPlays;
+    @Basic
+    @Column(name = "home_timeouts")
+    private Integer homeTimeouts;
+    @Basic
+    @Column(name = "away_timeouts")
+    private Integer awayTimeouts;
 
     public OngoingGamesEntity(String homeTeam, String awayTeam, String homeCoach, String awayCoach,
                               String homeOffensivePlaybook, String awayOffensivePlaybook, String homeDefensivePlaybook,
@@ -117,8 +126,9 @@ public class OngoingGamesEntity {
                               Integer quarter, String clock, Integer ballLocation, Integer down, Integer yardsToGo,
                               String tvChannel, String startTime, String location, Integer homeWins, Integer homeLosses,
                               Integer awayWins, Integer awayLosses, String scorebug, String subdivision,
-                              LocalDateTime timestamp, Double winProbability, Boolean isFinal, Integer season,
-                              String waitingOn, String winProbabilityPlot, String scorePlot, Integer numPlays) {
+                              LocalDateTime timestamp, Double winProbability, Boolean isFinal, Boolean isOT,
+                              Integer season, String waitingOn, String winProbabilityPlot, String scorePlot,
+                              Integer numPlays, Integer homeTimeouts, Integer awayTimeouts) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.homeCoach = homeCoach;
@@ -147,11 +157,14 @@ public class OngoingGamesEntity {
         this.timestamp = timestamp;
         this.winProbability = winProbability;
         this.isFinal = isFinal;
+        this.isOT = isOT;
         this.season = season;
         this.waitingOn = waitingOn;
         this.winProbabilityPlot = winProbabilityPlot;
         this.scorePlot = scorePlot;
         this.numPlays = numPlays;
+        this.homeTimeouts = homeTimeouts;
+        this.awayTimeouts = awayTimeouts;
     }
 
     public OngoingGamesEntity() {
@@ -390,6 +403,14 @@ public class OngoingGamesEntity {
         this.isFinal = isFinal;
     }
 
+    public Boolean getIsOT() {
+        return isOT;
+    }
+
+    public void setIsOT(Boolean isOT) {
+        this.isOT = isOT;
+    }
+
     public Integer getSeason() {
         return season;
     }
@@ -430,17 +451,33 @@ public class OngoingGamesEntity {
         this.numPlays = numPlays;
     }
 
+    public Integer getHomeTimeouts() {
+        return homeTimeouts;
+    }
+
+    public void setHomeTimeouts(Integer homeTimeouts) {
+        this.homeTimeouts = homeTimeouts;
+    }
+
+    public Integer getAwayTimeouts() {
+        return awayTimeouts;
+    }
+
+    public void setAwayTimeouts(Integer awayTimeouts) {
+        this.awayTimeouts = awayTimeouts;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OngoingGamesEntity that = (OngoingGamesEntity) o;
-        return gameId == that.gameId && Objects.equals(homeTeam, that.homeTeam) && Objects.equals(awayTeam, that.awayTeam) && Objects.equals(homeCoach, that.homeCoach) && Objects.equals(awayCoach, that.awayCoach) && Objects.equals(homeOffensivePlaybook, that.homeOffensivePlaybook) && Objects.equals(awayOffensivePlaybook, that.awayOffensivePlaybook) && Objects.equals(homeDefensivePlaybook, that.homeDefensivePlaybook) && Objects.equals(awayDefensivePlaybook, that.awayDefensivePlaybook) && Objects.equals(homeScore, that.homeScore) && Objects.equals(awayScore, that.awayScore) && Objects.equals(possession, that.possession) && Objects.equals(quarter, that.quarter) && Objects.equals(clock, that.clock) && Objects.equals(ballLocation, that.ballLocation) && Objects.equals(down, that.down) && Objects.equals(yardsToGo, that.yardsToGo) && Objects.equals(tvChannel, that.tvChannel) && Objects.equals(startTime, that.startTime) && Objects.equals(location, that.location) && Objects.equals(homeWins, that.homeWins) && Objects.equals(homeLosses, that.homeLosses) && Objects.equals(awayWins, that.awayWins) && Objects.equals(awayLosses, that.awayLosses) && Objects.equals(scorebug, that.scorebug) && Objects.equals(subdivision, that.subdivision) && Objects.equals(timestamp, that.timestamp) && Objects.equals(winProbability, that.winProbability) && Objects.equals(isFinal, that.isFinal) && Objects.equals(season, that.season) && Objects.equals(waitingOn, that.waitingOn) && Objects.equals(winProbabilityPlot, that.winProbabilityPlot) && Objects.equals(scorePlot, that.scorePlot) && Objects.equals(numPlays, that.numPlays);
+        return gameId == that.gameId && Objects.equals(homeTeam, that.homeTeam) && Objects.equals(awayTeam, that.awayTeam) && Objects.equals(homeCoach, that.homeCoach) && Objects.equals(awayCoach, that.awayCoach) && Objects.equals(homeOffensivePlaybook, that.homeOffensivePlaybook) && Objects.equals(awayOffensivePlaybook, that.awayOffensivePlaybook) && Objects.equals(homeDefensivePlaybook, that.homeDefensivePlaybook) && Objects.equals(awayDefensivePlaybook, that.awayDefensivePlaybook) && Objects.equals(homeScore, that.homeScore) && Objects.equals(awayScore, that.awayScore) && Objects.equals(possession, that.possession) && Objects.equals(quarter, that.quarter) && Objects.equals(clock, that.clock) && Objects.equals(ballLocation, that.ballLocation) && Objects.equals(down, that.down) && Objects.equals(yardsToGo, that.yardsToGo) && Objects.equals(tvChannel, that.tvChannel) && Objects.equals(startTime, that.startTime) && Objects.equals(location, that.location) && Objects.equals(homeWins, that.homeWins) && Objects.equals(homeLosses, that.homeLosses) && Objects.equals(awayWins, that.awayWins) && Objects.equals(awayLosses, that.awayLosses) && Objects.equals(scorebug, that.scorebug) && Objects.equals(subdivision, that.subdivision) && Objects.equals(timestamp, that.timestamp) && Objects.equals(winProbability, that.winProbability) && Objects.equals(isFinal, that.isFinal) && Objects.equals(isOT, that.isOT) && Objects.equals(season, that.season) && Objects.equals(waitingOn, that.waitingOn) && Objects.equals(winProbabilityPlot, that.winProbabilityPlot) && Objects.equals(scorePlot, that.scorePlot) && Objects.equals(numPlays, that.numPlays) && Objects.equals(homeTimeouts, that.homeTimeouts) && Objects.equals(awayTimeouts, that.awayTimeouts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(gameId, homeTeam, awayTeam, homeCoach, awayCoach, homeOffensivePlaybook, awayOffensivePlaybook, homeDefensivePlaybook, awayDefensivePlaybook, homeScore, awayScore, possession, quarter, clock, ballLocation, down, yardsToGo, tvChannel, startTime, location, homeWins, homeLosses, awayWins, awayLosses, scorebug, subdivision, timestamp, winProbability, isFinal, season, waitingOn, winProbabilityPlot, scorePlot, numPlays);
+        return Objects.hash(gameId, homeTeam, awayTeam, homeCoach, awayCoach, homeOffensivePlaybook, awayOffensivePlaybook, homeDefensivePlaybook, awayDefensivePlaybook, homeScore, awayScore, possession, quarter, clock, ballLocation, down, yardsToGo, tvChannel, startTime, location, homeWins, homeLosses, awayWins, awayLosses, scorebug, subdivision, timestamp, winProbability, isFinal, isOT, season, waitingOn, winProbabilityPlot, scorePlot, numPlays, homeTimeouts, awayTimeouts);
     }
 
     @Override
@@ -475,11 +512,14 @@ public class OngoingGamesEntity {
                 "  \"timestamp\": \"" + timestamp + "\",\n" +
                 "  \"winProbability\": " + winProbability + ",\n" +
                 "  \"isFinal\": " + isFinal + ",\n" +
+                "  \"isOT\": " + isOT + ",\n" +
                 "  \"season\": " + season + ",\n" +
                 "  \"waitingOn\": \"" + waitingOn + "\",\n" +
                 "  \"winProbabilityPlot\": \"" + winProbabilityPlot + "\",\n" +
                 "  \"scorePlot\": \"" + scorePlot + "\",\n" +
                 "  \"numPlays\": " + numPlays + "\n" +
+                "  \"homeTimeouts\": " + homeTimeouts + "\n" +
+                "  \"awayTimeouts\": " + awayTimeouts + "\n" +
                 "}";
     }
 }
