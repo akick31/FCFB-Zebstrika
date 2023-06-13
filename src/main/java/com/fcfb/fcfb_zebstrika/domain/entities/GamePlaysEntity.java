@@ -82,13 +82,16 @@ public class GamePlaysEntity {
     @Basic
     @Column(name = "away_team")
     private String awayTeam;
+    @Basic
+    @Column(name = "timeout_used")
+    private Boolean timeoutUsed;
 
     public GamePlaysEntity(Integer gameId, Integer playNumber, Integer homeScore, Integer awayScore, Integer quarter,
                            Integer clock, Integer ballLocation, String possession, Integer down, Integer yardsToGo,
                            String defensiveNumber, String offensiveNumber, String offensiveSubmitter,
                            String defensiveSubmitter, String play, String result, String actualResult, int yards,
                            int playTime, int runoffTime, Double winProbability, String homeTeam, String awayTeam,
-                           int difference) {
+                           int difference, Boolean timeoutUsed) {
         this.gameId = gameId;
         this.playNumber = playNumber;
         this.homeScore = homeScore;
@@ -113,6 +116,7 @@ public class GamePlaysEntity {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.difference = difference;
+        this.timeoutUsed = timeoutUsed;
     }
 
     public GamePlaysEntity() {
@@ -319,17 +323,25 @@ public class GamePlaysEntity {
         this.playId = playId;
     }
 
+    public Boolean getTimeoutUsed() {
+        return timeoutUsed;
+    }
+
+    public void setTimeoutUsed(Boolean timeoutUsed) {
+        this.timeoutUsed = timeoutUsed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GamePlaysEntity that = (GamePlaysEntity) o;
-        return playNumber == that.playNumber && Objects.equals(gameId, that.gameId) && Objects.equals(homeScore, that.homeScore) && Objects.equals(awayScore, that.awayScore) && Objects.equals(gameQuarter, that.gameQuarter) && Objects.equals(clock, that.clock) && Objects.equals(ballLocation, that.ballLocation) && Objects.equals(possession, that.possession) && Objects.equals(down, that.down) && Objects.equals(yardsToGo, that.yardsToGo) && Objects.equals(defensiveNumber, that.defensiveNumber) && Objects.equals(offensiveNumber, that.offensiveNumber) && Objects.equals(defensiveSubmitter, that.defensiveSubmitter) && Objects.equals(offensiveSubmitter, that.offensiveSubmitter) && Objects.equals(play, that.play) && Objects.equals(result, that.result) && Objects.equals(difference, that.difference) && Objects.equals(actualResult, that.actualResult) && Objects.equals(yards, that.yards) && Objects.equals(playTime, that.playTime) && Objects.equals(runoffTime, that.runoffTime) && Objects.equals(winProbability, that.winProbability) && Objects.equals(homeTeam, that.homeTeam) && Objects.equals(awayTeam, that.awayTeam) && Objects.equals(playId, that.playId);
+        return playNumber == that.playNumber && Objects.equals(gameId, that.gameId) && Objects.equals(homeScore, that.homeScore) && Objects.equals(awayScore, that.awayScore) && Objects.equals(gameQuarter, that.gameQuarter) && Objects.equals(clock, that.clock) && Objects.equals(ballLocation, that.ballLocation) && Objects.equals(possession, that.possession) && Objects.equals(down, that.down) && Objects.equals(yardsToGo, that.yardsToGo) && Objects.equals(defensiveNumber, that.defensiveNumber) && Objects.equals(offensiveNumber, that.offensiveNumber) && Objects.equals(defensiveSubmitter, that.defensiveSubmitter) && Objects.equals(offensiveSubmitter, that.offensiveSubmitter) && Objects.equals(play, that.play) && Objects.equals(result, that.result) && Objects.equals(difference, that.difference) && Objects.equals(actualResult, that.actualResult) && Objects.equals(yards, that.yards) && Objects.equals(playTime, that.playTime) && Objects.equals(runoffTime, that.runoffTime) && Objects.equals(winProbability, that.winProbability) && Objects.equals(homeTeam, that.homeTeam) && Objects.equals(awayTeam, that.awayTeam) && Objects.equals(playId, that.playId) && Objects.equals(timeoutUsed, that.timeoutUsed);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(gameId, playNumber, homeScore, awayScore, gameQuarter, clock, ballLocation, possession, down, yardsToGo, defensiveNumber, offensiveNumber, defensiveSubmitter, offensiveSubmitter, play, result, difference, actualResult, yards, playTime, runoffTime, winProbability, homeTeam, awayTeam, playId);
+        return Objects.hash(gameId, playNumber, homeScore, awayScore, gameQuarter, clock, ballLocation, possession, down, yardsToGo, defensiveNumber, offensiveNumber, defensiveSubmitter, offensiveSubmitter, play, result, difference, actualResult, yards, playTime, runoffTime, winProbability, homeTeam, awayTeam, playId, timeoutUsed);
     }
 
     @Override
@@ -359,7 +371,8 @@ public class GamePlaysEntity {
                 "  \"winProbability\": " + winProbability + ",\n" +
                 "  \"homeTeam\": \"" + homeTeam + "\",\n" +
                 "  \"awayTeam\": \"" + awayTeam + "\",\n" +
-                "  \"difference\": " + difference + "\n" +
+                "  \"difference\": " + difference + "\",\n" +
+                "  \"timeoutUsed\": " + timeoutUsed + "\n" +
                 "}";
     }
 

@@ -39,14 +39,16 @@ public class OngoingGamesController {
      * @return
      */
 
-    @PostMapping("/games/start/{season}/{subdivision}/{homeTeam}/{awayTeam}/{tvChannel}/{startTime}/{location}")
+    @PostMapping("/games/start/{season}/{subdivision}/{homeTeam}/{awayTeam}/{tvChannel}/{startTime}/{location}/{coinTossWinner}/{coinTossChoice}")
     public ResponseEntity<String> startGame(@PathVariable("season") String season,
                                             @PathVariable("subdivision") String subdivision,
                                             @PathVariable("homeTeam") String homeTeam,
                                             @PathVariable("awayTeam") String awayTeam,
                                             @PathVariable("tvChannel") String tvChannel,
                                             @PathVariable("startTime") String startTime,
-                                            @PathVariable("location") String location) {
+                                            @PathVariable("location") String location,
+                                            @PathVariable("coinTossWinner") String coinTossWinner,
+                                            @PathVariable("coinTossChoice") String coinTossChoice) {
 
         try {
             Optional<TeamsEntity> homeTeamData = teamsRepository.findByName(homeTeam);
@@ -89,7 +91,9 @@ public class OngoingGamesController {
                         "none_scoreplot.png",
                         0,
                         3,
-                        3));
+                        3,
+                        coinTossWinner,
+                        coinTossChoice));
 
                 // Create image names
                 String gameId = String.valueOf(newGame.getGameId());

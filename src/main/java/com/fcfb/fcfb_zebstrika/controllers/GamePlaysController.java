@@ -97,7 +97,8 @@ public class GamePlaysController {
                         gameData.get().getWinProbability(),
                         gameData.get().getHomeTeam(),
                         gameData.get().getAwayTeam(),
-                        0));
+                        0,
+                        false));
 
                 return new ResponseEntity<>(gamePlay.toString(), HttpStatus.CREATED);
             }
@@ -127,6 +128,7 @@ public class GamePlaysController {
                                                                     @PathVariable("defensiveTimeoutCalled") Boolean defensiveTimeoutCalled) {
         try {
             Optional<GamePlaysEntity> gamePlayData = gamePlaysRepository.findById(playId);
+            play = play.toLowerCase();
 
 
             if (gamePlayData.isPresent()) {
@@ -142,13 +144,27 @@ public class GamePlaysController {
                         OngoingGamesEntity game = gameData.get();
                         GameStatsEntity stats = statsData.get();
 
-                        //TODO handle if play is not "normal", aka if last play was TD etc.
                         GamePlaysEntity previousPlay = gamePlaysRepository.getPreviousPlay(gamePlay.getGameId());
                         Boolean timeoutCalled = false;
                         if (offensiveTimeoutCalled || defensiveTimeoutCalled) {
                             timeoutCalled = true;
                         }
-                        gamePlay = playLogic.runPlay(gamePlay, previousPlay, game, play, runoffType, timeoutCalled, String.valueOf(offensiveNumber), decryptedDefensiveNumber);
+
+                        if (play.equals("pass")|| play.equals("run") || play.equals("spike") || play.equals("kneel")) {
+                            gamePlay = playLogic.runNormalPlay(gamePlay, previousPlay, game, play, runoffType, timeoutCalled, String.valueOf(offensiveNumber), decryptedDefensiveNumber);
+                        }
+                        else if (play.equals("pat") || play.equals("two point")) {
+                            gamePlay = playLogic.runPointAfterPlay(gamePlay, game, play, String.valueOf(offensiveNumber), decryptedDefensiveNumber);
+                        }
+                        else if (play.equals("normal") || play.equals("onside") || play.equals("squib")) {
+                            gamePlay = playLogic.runKickoffPlay(gamePlay, game, play, String.valueOf(offensiveNumber), decryptedDefensiveNumber);
+                        }
+                        else if (play.equals("field goal")){
+
+                        }
+                        else if (play.equals("punt")) {
+
+                        }
                         game = gameInformation.updateGameInformation(game, gamePlay, previousPlay, offensiveTimeoutCalled, defensiveTimeoutCalled);
                         stats = gameStats.updateGameStats(stats, gamePlay);
 

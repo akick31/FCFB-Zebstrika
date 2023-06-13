@@ -13,4 +13,7 @@ public interface RangesRepository extends CrudRepository<RangesEntity, Integer> 
             "AND defensive_playbook = ? AND ? BETWEEN lower_range AND upper_range;", nativeQuery = true)
     RangesEntity findNormalResult(String play_type, String offensive_playbook, String defensive_playbook,
                                             int difference);
+
+    @Query(value = "SELECT * FROM ranges WHERE play_type = ? AND ? BETWEEN lower_range AND upper_range;", nativeQuery = true)
+    RangesEntity findNonNormalResult(String play_type, int difference);
 }

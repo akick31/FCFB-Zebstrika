@@ -1,7 +1,10 @@
 package com.fcfb.fcfb_zebstrika.game_logic;
 
 import com.fcfb.fcfb_zebstrika.domain.entities.GamePlaysEntity;
+import com.fcfb.fcfb_zebstrika.domain.entities.OngoingGamesEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 @Component
 public class GameUtils {
@@ -55,4 +58,23 @@ public class GameUtils {
         }
         return false;
     }
+
+    public String handleHalfTimePossessionChange(OngoingGamesEntity game) {
+        String possession = "";
+        if (Objects.equals(game.getCoinTossWinner(), "home") && Objects.equals(game.getCoinTossChoice(), "defer")){
+            possession = "away";
+        }
+        else if (Objects.equals(game.getCoinTossWinner(), "home") && Objects.equals(game.getCoinTossChoice(), "receive")){
+            possession = "home";
+        }
+        else if (Objects.equals(game.getCoinTossWinner(), "away") && Objects.equals(game.getCoinTossChoice(), "defer")){
+            possession = "home";
+        }
+        else if (Objects.equals(game.getCoinTossWinner(), "away") && Objects.equals(game.getCoinTossChoice(), "receive")){
+            possession = "away";
+        }
+        return possession;
+    }
+
+    //TODO Win probability and ELO rating methods
 }
